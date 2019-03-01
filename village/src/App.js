@@ -6,6 +6,7 @@ import './App.css';
 import SmurfForm from './components/SmurfForm';
 import Smurfs from './components/Smurfs';
 import Header from './components/Header';
+import SmurfPage from './components/SmurfPage';
 
 const url = 'http://localhost:3333/smurfs';
 
@@ -63,6 +64,16 @@ function App () {
     getSmurfs();
   }, []);
 
+  const routerProps = {
+    editSmurf,
+    deleteSmurf,
+    editMode,
+    setEditMode,
+    deleteMode,
+    setDeleteMode,
+    smurfs,
+  };
+
   return (
     <Router>
       <div className="App">
@@ -71,16 +82,11 @@ function App () {
           exact 
           path="/" 
           render={(props) => <Smurfs 
-            editSmurf={editSmurf}
-            deleteSmurf={deleteSmurf} 
-            editMode={editMode}
-            setEditMode={setEditMode}
-            deleteMode={deleteMode} 
-            setDeleteMode={setDeleteMode}
-            smurfs={smurfs} 
-            {...props} 
+            {...routerProps} 
+            {...props}
           /> }  
         />
+        <Route path="/smurf/:id" render={(props) => <SmurfPage {...props} smurf={smurfs[props.match.params.id]}/>}/>
         <Route 
           path="/smurf-form" 
           render={(props) => <SmurfForm addSmurf={addSmurf} {...props} />}

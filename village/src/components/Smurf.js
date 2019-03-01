@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Card = styled.div`
@@ -125,32 +126,33 @@ const Smurf = ({id, image, name, height, age, editMode, editSmurf, setEditMode, 
   };
 
   return (
-    <Card deleteMode={deleteMode} editMode={editMode} onClick={!!deleteMode && deleteFunc}> 
-      <Img>
-        {deleteMode && <DeleteButton>
-          <i className="material-icons" style={{ fontSize: 14 }}>close</i>
-        </DeleteButton>}
-        <img src={image} alt="" height="80%"/>
-      </Img>
-      <Text>
-        { !editMode ?
-          <React.Fragment>
-            <h3>{name}</h3>
-            <strong>{height} tall</strong>
-            <p>{age} smurf years old</p>
-          </React.Fragment>
-        :
-          <React.Fragment>
-            <Form onSubmit={submitForm}>
-              <input type="text" value={fields.name} placeHolder={name} name="name" onChange={handleInputChange} />
-              <input type="text"  value={fields.height} placeHolder={height} name="height" onChange={handleInputChange} />
-              <input type="text"  value={fields.age} placeHolder={age} name="age" onChange={handleInputChange} />
-              <Btn type="submit">Change</Btn>
-            </Form>
-          </React.Fragment>
-        }
-      </Text>
-    </Card>
+    
+      <Card deleteMode={deleteMode} editMode={editMode} onClick={!!deleteMode && deleteFunc}> 
+        <Img>
+          {deleteMode && <DeleteButton>
+            <i className="material-icons" style={{ fontSize: 14 }}>close</i>
+          </DeleteButton>}
+          <img src={image} alt="" height="80%"/>
+        </Img>
+        <Text>
+          { !editMode ?
+            <React.Fragment>
+              <h3>{name}</h3>
+              <strong>{height} tall</strong>
+              <p>{age} smurf years old</p>
+            </React.Fragment>
+          :
+            <React.Fragment>
+              <Form onSubmit={submitForm}>
+                <input type="text" value={fields.name} placeHolder={name} name="name" onChange={handleInputChange} />
+                <input type="text"  value={fields.height} placeHolder={height} name="height" onChange={handleInputChange} />
+                <input type="text"  value={fields.age} placeHolder={age} name="age" onChange={handleInputChange} />
+                <Btn type="submit">Change</Btn>
+              </Form>
+            </React.Fragment>
+          }
+        </Text>
+      </Card>
   );
 };
 
