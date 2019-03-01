@@ -3,6 +3,7 @@ import { NavLink, Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const HeaderWrapper = styled.div`
+    z-index: 1000;
     box-sizing: border-box;
     position: fixed;
     background: #fff;

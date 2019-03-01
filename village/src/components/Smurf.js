@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const Card = styled.div`
   box-sizing: border-box;
-  height: 350px;
+  height: 380px;
   width: 250px;
   background: #fff;
   box-shadow: 0 4px 35px rgba(0,0,0,0.2);
@@ -25,7 +25,7 @@ const Card = styled.div`
   }
 
   :hover {
-    transform: ${({deleteMode}) => deleteMode ? 'none' : 'scale(1.02)'};
+    transform: ${({deleteMode, editMode}) => deleteMode || editMode ? 'none' : 'scale(1.02)'};
     box-shadow: 0 5px 35px rgba(0,0,0,0.25);
   }
 `;
@@ -66,7 +66,37 @@ const DeleteButton = styled.button`
   cursor: pointer;
 `;
 
-const Smurf = ({id, name, height, age, editMode, editSmurf, setEditMode, deleteMode, deleteSmurf}) => {
+const Form = styled.form`
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  input {
+    box-sizing: border-box;
+    width: 80%;
+    height: 30px;
+    margin: 5px 0;
+    padding: 0 10px;
+    color: #000;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+`;
+
+const Btn = styled.button`
+  height: 30px;
+  background: skyblue;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  width: 80%;
+  margin: 10px 0;
+`
+
+const Smurf = ({id, image, name, height, age, editMode, editSmurf, setEditMode, deleteMode, deleteSmurf}) => {
   const [fields, setFields] = useState({
     name: '',
     height: '',
@@ -95,11 +125,12 @@ const Smurf = ({id, name, height, age, editMode, editSmurf, setEditMode, deleteM
   };
 
   return (
-    <Card deleteMode={deleteMode} onClick={!!deleteMode && deleteFunc}> 
+    <Card deleteMode={deleteMode} editMode={editMode} onClick={!!deleteMode && deleteFunc}> 
       <Img>
         {deleteMode && <DeleteButton>
           <i className="material-icons" style={{ fontSize: 14 }}>close</i>
         </DeleteButton>}
+        <img src={image} alt="" height="80%"/>
       </Img>
       <Text>
         { !editMode ?
@@ -110,12 +141,12 @@ const Smurf = ({id, name, height, age, editMode, editSmurf, setEditMode, deleteM
           </React.Fragment>
         :
           <React.Fragment>
-            <form onSubmit={submitForm}>
+            <Form onSubmit={submitForm}>
               <input type="text" value={fields.name} placeHolder={name} name="name" onChange={handleInputChange} />
               <input type="text"  value={fields.height} placeHolder={height} name="height" onChange={handleInputChange} />
               <input type="text"  value={fields.age} placeHolder={age} name="age" onChange={handleInputChange} />
-              <button type="submit">Change</button>
-            </form>
+              <Btn type="submit">Change</Btn>
+            </Form>
           </React.Fragment>
         }
       </Text>

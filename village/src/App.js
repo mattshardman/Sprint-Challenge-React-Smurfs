@@ -18,6 +18,7 @@ function App () {
     try {
       const res = await axios.get(url);
       setSmurfs(res.data);
+      setDeleteMode(false);
     } catch(e) {
       console.log(e);
     }
@@ -29,6 +30,7 @@ function App () {
     try {
       const res = await axios.post(url, fields);
       setSmurfs(res.data);
+      setDeleteMode(false);
     } catch (e) {
       console.log(e);
     }
@@ -41,6 +43,7 @@ function App () {
       const res = await axios.put(`${url}/${id}`, fields);
       console.log(res)
       setSmurfs(res.data);
+      setDeleteMode(false);
     } catch (e) {
       console.log(e);
     }

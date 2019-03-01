@@ -16,25 +16,29 @@ const sendUserError = (msg, res) => {
 let smurfs = [
   {
     id: 0,
+    image: 'http://pngimg.com/uploads/smurf/smurf_PNG33.png',
     name: 'Brainey Smurf',
     age: 200,
     height: '8cm'
   },
   {
     id: 1,
+    image: 'https://vignette.wikia.nocookie.net/sonypicturesanimation/images/0/04/Clumsy_smurfs_2_2017.png/revision/latest?cb=20170717001650',
     name: 'Happy Smurf',
     age: 100,
     height: '12cm'
   },
   {
     id: 2,
+    image: 'https://cdn1.iconfinder.com/data/icons/smurfs/512/grouchy-smurf-icon.png',
     name: 'Grumpy Smurf',
     age: 400,
     height: '6cm'
   },
   {
     id: 3,
-    name: 'Stupid Smurf',
+    image: 'http://pngimg.com/uploads/smurf/smurf_PNG46.png',
+    name: 'Papa Smurf',
     age: 220,
     height: '3cm'
   }

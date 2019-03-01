@@ -43,7 +43,7 @@ const Btn = styled.button`
 function Smurfs ({ smurfs, deleteMode, editMode, setEditMode, setDeleteMode, deleteSmurf, editSmurf }) {
     return (
       <SmurfsPage>
-        <h2 style={{ color: "#484848" }}>Smurf in the village</h2>
+        <h2 style={{ color: "skyblue" }}>Smurf in the village</h2>
         <BtnWrapper>
           <Btn danger disable={editMode} onClick={() => setDeleteMode(!deleteMode)}>Delete smurfs</Btn>
           <Btn disable={deleteMode} onClick={() => setEditMode(!editMode)}>Edit smurfs</Btn>
