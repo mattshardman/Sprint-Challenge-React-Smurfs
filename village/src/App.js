@@ -21,6 +21,19 @@ function App () {
     }
   }
 
+  const addSmurf = async fields => {
+    // add code to create the smurf using the api
+    const url = 'http://localhost:3333/smurfs';
+
+    try {
+      const res = await axios.post(url, fields);
+      console.log(res)
+      setSmurfs(res.data);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   useEffect(() => {
     getSmurfs();
   }, []);
@@ -36,7 +49,7 @@ function App () {
         />
         <Route 
           path="/smurf-form" 
-          component={SmurfForm}
+          render={(props) => <SmurfForm addSmurf={addSmurf} {...props} />}
         />
       </div>
     </Router>

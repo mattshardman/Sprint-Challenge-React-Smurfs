@@ -1,22 +1,31 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
+import Smurf from './Smurf';
+
 const SmurfsPage = styled.div`
+  box-sizing: border-box;
+  padding: 80px 20% 0 20%;
   height: 100vh;
   width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 `;
 
-import Smurf from './Smurf';
+const SmurfWrapper = styled.div`
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+`;
 
 class Smurfs extends Component {
   render() {
     return (
-      <div className="Smurfs">
-        <h1>Smurf in the village</h1>
-        <ul>
+      <SmurfsPage>
+        <h2 style={{ color: "#484848" }}>Smurf in the village</h2>
+        <SmurfWrapper>
           {this.props.smurfs.map(smurf => {
             return (
               <Smurf
@@ -28,8 +37,8 @@ class Smurfs extends Component {
               />
             );
           })}
-        </ul>
-      </div>
+        </SmurfWrapper>
+      </SmurfsPage>
     );
   }
 }

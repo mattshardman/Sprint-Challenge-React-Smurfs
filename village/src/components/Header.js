@@ -35,7 +35,7 @@ function Header() {
         <HeaderWrapper>
             <Link to="/" style={{ textDecoration: 'none' }}>
                 <LogoWrapper>
-                    <img src="https://i.pinimg.com/originals/af/2d/8a/af2d8a40c0fa454a713b2a6d5f55e524.png" alt="" height={60}/>
+                    <img src="https://vignette.wikia.nocookie.net/sonypicturesanimation/images/0/04/Clumsy_smurfs_2_2017.png/revision/latest?cb=20170717001650" alt="" height={45}/>
                     <h1 style={{ margin: 0, marginLeft: 20, color: 'deepskyblue' }}>Smurf village</h1>
                 </LogoWrapper>
             </Link>

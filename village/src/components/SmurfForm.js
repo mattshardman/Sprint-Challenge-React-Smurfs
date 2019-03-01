@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 
 const FormPage = styled.div`
@@ -51,30 +52,24 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-function SmurfForm() {
+function SmurfForm({ addSmurf, history }) {
   const [fields, setFields] = useState({
     name: '',
     age: '',
     height: ''
   });
 
-  const addSmurf = async event => {
-    event.preventDefault();
-    // add code to create the smurf using the api
-    const url = 'http://localhost:3333/smurfs';
-
-    try {
-      const res = await axios.post(url, fields);
-      setFields({
-        name: '',
-        age: '',
-        height: ''
-      });
-    } catch (e) {
-      console.log(e);
-    }
+  const submitForm = e => {
+    e.preventDefault();
+    addSmurf(fields);
+    setFields({
+      name: '',
+      age: '',
+      height: ''
+    });
+    return history.push('/');
   }
-
+ 
   const handleInputChange = e => {
     const { name, value } = e.target;
     setFields(st => ({ ...st, [name]: value }));
@@ -82,7 +77,7 @@ function SmurfForm() {
 
   return (
     <FormPage>
-      <Form onSubmit={addSmurf}>
+      <Form onSubmit={submitForm}>
           <h1>Add a Smurf to the village</h1>
           <Input
             onChange={handleInputChange}
@@ -108,4 +103,4 @@ function SmurfForm() {
   );
 }
 
-export default SmurfForm;
+export default withRouter(SmurfForm);
