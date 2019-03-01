@@ -11,6 +11,7 @@ const HeaderWrapper = styled.div`
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px #ddd solid;
+    box-shadow: 0 3px 25px rgba(0,0,0,0.2);
 `;
 
 const LinkWrapper = styled.div`
