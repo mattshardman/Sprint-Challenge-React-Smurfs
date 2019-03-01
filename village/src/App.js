@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import './App.css';
 import SmurfForm from './components/SmurfForm';
@@ -24,10 +25,19 @@ function App () {
   }, []);
 
   return (
-    <div className="App">
-      <SmurfForm />
-      <Smurfs smurfs={smurfs} />
-    </div>
+    <Router>
+      <div className="App">
+        <Route 
+          exact 
+          path="/" 
+          render={(props) => <Smurfs smurfs={smurfs} {...props} /> }  
+        />
+        <Route 
+          path="/smurf-form" 
+          component={SmurfForm}
+        />
+      </div>
+    </Router>
     );
 }
 
