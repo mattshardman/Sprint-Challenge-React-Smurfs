@@ -1,27 +1,105 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import './App.css';
 import SmurfForm from './components/SmurfForm';
 import Smurfs from './components/Smurfs';
+import Header from './components/Header';
+import SmurfPage from './components/SmurfPage';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      smurfs: [],
-    };
+const url = 'http://localhost:3333/smurfs';
+
+function App () {
+  const [smurfs, setSmurfs] = useState(null);
+  const [editMode, setEditMode] = useState(false);
+  const [deleteMode, setDeleteMode] = useState(false);
+  
+  const getSmurfs = async () => {
+    try {
+      const res = await axios.get(url);
+      setSmurfs(res.data);
+      setDeleteMode(false);
+    } catch(e) {
+      console.log(e);
+    }
   }
-  // add any needed code to ensure that the smurfs collection exists on state and it has data coming from the server
-  // Notice what your map function is looping over and returning inside of Smurfs.
-  // You'll need to make sure you have the right properties on state and pass them down to props.
-  render() {
-    return (
+
+  const addSmurf = async fields => {
+    const url = 'http://localhost:3333/smurfs';
+
+    try {
+      const res = await axios.post(url, fields);
+      setSmurfs(res.data);
+      setDeleteMode(false);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  const editSmurf = async (id, fields) => {
+    const url = 'http://localhost:3333/smurfs';
+    console.log(id, fields)
+    try {
+      const res = await axios.put(`${url}/${id}`, fields);
+      console.log(res)
+      setSmurfs(res.data);
+      setDeleteMode(false);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  const deleteSmurf = async id => {
+    const url = 'http://localhost:3333/smurfs';
+    try {
+      const res = await axios.delete(`${url}/${id}`);
+    setSmurfs(res.data);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  useEffect(() => {
+    getSmurfs();
+  }, []);
+
+  const routerProps = {
+    editSmurf,
+    deleteSmurf,
+    editMode,
+    setEditMode,
+    deleteMode,
+    setDeleteMode,
+    smurfs,
+  };
+
+  return (
+    <Router>
       <div className="App">
-        <SmurfForm />
-        <Smurfs smurfs={this.state.smurfs} />
+        <Header/>
+        {smurfs ?
+        <React.Fragment>
+          <Route 
+            exact 
+            path="/" 
+            render={(props) => <Smurfs 
+              {...routerProps} 
+              {...props}
+            /> }  
+          />
+          <Route path="/smurf/:id" render={(props) => <SmurfPage {...props} smurfs={smurfs}/>}/>
+          <Route 
+            path="/smurf-form" 
+            render={(props) => <SmurfForm addSmurf={addSmurf} {...props} />}
+          />
+        </React.Fragment>
+        :
+        <div>Loading...</div>
+        }
       </div>
+    </Router>
     );
-  }
 }
 
 export default App;
