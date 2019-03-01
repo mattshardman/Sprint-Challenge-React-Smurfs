@@ -11,6 +11,8 @@ const url = 'http://localhost:3333/smurfs';
 
 function App () {
   const [smurfs, setSmurfs] = useState([]);
+  const [editMode, setEditMode] = useState(false);
+  const [deleteMode, setDeleteMode] = useState(false);
   
   const getSmurfs = async () => {
     try {
@@ -49,11 +51,19 @@ function App () {
   return (
     <Router>
       <div className="App">
-        <Header />
+        <Header/>
         <Route 
           exact 
           path="/" 
-          render={(props) => <Smurfs deleteSmurf={deleteSmurf} smurfs={smurfs} {...props} /> }  
+          render={(props) => <Smurfs 
+            deleteSmurf={deleteSmurf} 
+            editMode={editMode}
+            setEditMode={setEditMode}
+            deleteMode={deleteMode} 
+            setDeleteMode={setDeleteMode}
+            smurfs={smurfs} 
+            {...props} 
+          /> }  
         />
         <Route 
           path="/smurf-form" 

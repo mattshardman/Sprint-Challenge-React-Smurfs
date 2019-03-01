@@ -12,9 +12,20 @@ const Card = styled.div`
   cursor: pointer;
   transition: box-shadow 420ms, transform 420ms;
   margin: 10px;
+  animation-name: ${({deleteMode}) => deleteMode ? 'wobble': 'none'};
+  animation-duration: 400ms;
+  animation-iteration-count: infinite;
+
+  @keyframes wobble {
+    0% { transform: rotate(0)};
+    25% { transform: rotate(1deg)};
+    50% { transform: rotate(0deg)};
+    75% { transform: rotate(-1deg)};
+    0% { transform: rotate(0)};
+  }
 
   :hover {
-    transform: scale(1.02);
+    transform: ${({deleteMode}) => deleteMode ? 'none' : 'scale(1.02)'};
     box-shadow: 0 5px 35px rgba(0,0,0,0.25);
   }
 `;
@@ -29,6 +40,7 @@ const Text = styled.div`
 `;
 
 const Img = styled.div`
+  position: relative;
   box-sizing: border-box;
   height: 50%;
   width: 100%;
@@ -39,10 +51,31 @@ const Img = styled.div`
   background: skyblue;
 `
 
-const Smurf = ({id, name, height, age, deleteSmurf}) => {
+const DeleteButton = styled.button`
+  background: rgba(255,255,255,0.3);
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  position: absolute; 
+  top: 10px;
+  right: 10px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Smurf = ({id, name, height, age, deleteMode, deleteSmurf}) => {
+  const deleteFunc = () => {
+    deleteSmurf(id)
+  } 
+
   return (
-    <Card onClick={() => deleteSmurf(id)}> 
+    <Card deleteMode={deleteMode} onClick={!!deleteMode && deleteFunc}> 
       <Img>
+        {deleteMode && <DeleteButton>
+          <i className="material-icons" style={{ fontSize: 14 }}>close</i>
+        </DeleteButton>}
       </Img>
       <Text>
         <h3>{name}</h3>

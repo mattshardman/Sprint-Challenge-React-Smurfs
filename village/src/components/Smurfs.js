@@ -15,21 +15,47 @@ const SmurfsPage = styled.div`
 `;
 
 const SmurfWrapper = styled.div`
-  margin-top: 10px;
+  margin-top: 20px;
   display: flex;
   flex-wrap: wrap;
 `;
 
-function Smurfs ({ smurfs, deleteSmurf }) {
+const BtnWrapper = styled.div`
+  display: flex;
+`;
+
+const Btn = styled.button`
+  margin: 10px;
+  width: 150px;
+  border: none;
+  height: 30px;
+  background: ${({danger}) => danger ? 'orange' : 'skyblue'};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  cursor : pointer;
+  outline: none;
+`;
+
+function Smurfs ({ smurfs, deleteMode, editMode, setEditMode, setDeleteMode, deleteSmurf }) {
     return (
       <SmurfsPage>
         <h2 style={{ color: "#484848" }}>Smurf in the village</h2>
+        <BtnWrapper>
+          <Btn danger onClick={() => setDeleteMode(!deleteMode)}>Delete smurfs</Btn>
+          <Btn onClick={() => setEditMode(!editMode)}>Edit smurfs</Btn>
+        </BtnWrapper>
         <SmurfWrapper>
           {smurfs.map(smurf => {
             return (
               <Smurf
                 key={smurf.id}
+                editMode={editMode}
                 deleteSmurf={deleteSmurf}
+                deleteMode={deleteMode}
                 {...smurf}
               />
             );
