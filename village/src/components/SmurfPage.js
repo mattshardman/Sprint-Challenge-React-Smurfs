@@ -11,21 +11,32 @@ const Wrapper = styled.div`
 `;
 
 const Card = styled.div`
-    width: 400px;
-    height: 500px;
-    display: flex;
-    flex-direction: column;
+  box-sizing: border-box;
+  width: 500px;
+  max-width: 95%;
+  height: 600px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px #ddd;
+  padding: 20px 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+
 `
 
-function SmurfPage({smurf}) {
-    console.log(smurf)
-    if (smurf) {
+function SmurfPage({smurfs, match}) {
+    
+    if (smurfs) {
+        const smurf = smurfs.find(each => each.id == match.params.id);
         return (
             <Wrapper>
                 <Card>
-                    {smurf.name}
-                    {smurf.age}
-                    {smurf.height}
+                    <img src={smurf.image || ''} alt="" height='70%'/>
+                    <h1 style={{ margin: '10px 0' }}>{smurf.name}</h1>
+                    <p style={{ margin: '5px 0' }}><strong>Age:</strong> {smurf.age} smurf years</p>
+                    <p style={{ margin: '5px 0' }}><strong>Height:</strong> {smurf.height}</p>
                 </Card>
             </Wrapper>
         )

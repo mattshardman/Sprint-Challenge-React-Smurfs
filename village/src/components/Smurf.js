@@ -124,9 +124,22 @@ const Smurf = ({id, image, name, height, age, editMode, editSmurf, setEditMode, 
     console.log(name, value)
     setFields(st => ({ ...st, [name]: value }));
   };
+  
+  const disableClick = e => {
+    if (deleteMode || editMode) {
+      e.preventDefault();
+    }
+  }
 
   return (
-    
+    <Link 
+      to={{
+        pathname: `/smurf/${id}`,
+        state: { id }
+      }} 
+      onClick={disableClick}
+      style={{ textDecoration: 'none', color: '#000' }}
+    >
       <Card deleteMode={deleteMode} editMode={editMode} onClick={!!deleteMode && deleteFunc}> 
         <Img>
           {deleteMode && <DeleteButton>
@@ -147,12 +160,13 @@ const Smurf = ({id, image, name, height, age, editMode, editSmurf, setEditMode, 
                 <input type="text" value={fields.name} placeHolder={name} name="name" onChange={handleInputChange} />
                 <input type="text"  value={fields.height} placeHolder={height} name="height" onChange={handleInputChange} />
                 <input type="text"  value={fields.age} placeHolder={age} name="age" onChange={handleInputChange} />
-                <Btn type="submit">Change</Btn>
+                <Btn type="submit" onClick={submitForm}>Change</Btn>
               </Form>
             </React.Fragment>
           }
         </Text>
       </Card>
+    </Link>
   );
 };
 

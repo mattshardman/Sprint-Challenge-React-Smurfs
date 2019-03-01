@@ -11,7 +11,7 @@ import SmurfPage from './components/SmurfPage';
 const url = 'http://localhost:3333/smurfs';
 
 function App () {
-  const [smurfs, setSmurfs] = useState([]);
+  const [smurfs, setSmurfs] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [deleteMode, setDeleteMode] = useState(false);
   
@@ -78,19 +78,25 @@ function App () {
     <Router>
       <div className="App">
         <Header/>
-        <Route 
-          exact 
-          path="/" 
-          render={(props) => <Smurfs 
-            {...routerProps} 
-            {...props}
-          /> }  
-        />
-        <Route path="/smurf/:id" render={(props) => <SmurfPage {...props} smurf={smurfs[props.match.params.id]}/>}/>
-        <Route 
-          path="/smurf-form" 
-          render={(props) => <SmurfForm addSmurf={addSmurf} {...props} />}
-        />
+        {smurfs ?
+        <React.Fragment>
+          <Route 
+            exact 
+            path="/" 
+            render={(props) => <Smurfs 
+              {...routerProps} 
+              {...props}
+            /> }  
+          />
+          <Route path="/smurf/:id" render={(props) => <SmurfPage {...props} smurfs={smurfs}/>}/>
+          <Route 
+            path="/smurf-form" 
+            render={(props) => <SmurfForm addSmurf={addSmurf} {...props} />}
+          />
+        </React.Fragment>
+        :
+        <div>Loading...</div>
+        }
       </div>
     </Router>
     );
