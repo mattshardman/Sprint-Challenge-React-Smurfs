@@ -39,15 +39,15 @@ const Img = styled.div`
   background: skyblue;
 `
 
-const Smurf = props => {
+const Smurf = ({id, name, height, age, deleteSmurf}) => {
   return (
-    <Card>
+    <Card onClick={() => deleteSmurf(id)}> 
       <Img>
       </Img>
       <Text>
-        <h3>{props.name}</h3>
-        <strong>{props.height} tall</strong>
-        <p>{props.age} smurf years old</p>
+        <h3>{name}</h3>
+        <strong>{height} tall</strong>
+        <p>{age} smurf years old</p>
       </Text>
     </Card>
   );

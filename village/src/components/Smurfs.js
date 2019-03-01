@@ -20,27 +20,23 @@ const SmurfWrapper = styled.div`
   flex-wrap: wrap;
 `;
 
-class Smurfs extends Component {
-  render() {
+function Smurfs ({ smurfs, deleteSmurf }) {
     return (
       <SmurfsPage>
         <h2 style={{ color: "#484848" }}>Smurf in the village</h2>
         <SmurfWrapper>
-          {this.props.smurfs.map(smurf => {
+          {smurfs.map(smurf => {
             return (
               <Smurf
-                name={smurf.name}
-                id={smurf.id}
-                age={smurf.age}
-                height={smurf.height}
                 key={smurf.id}
+                deleteSmurf={deleteSmurf}
+                {...smurf}
               />
             );
           })}
         </SmurfWrapper>
       </SmurfsPage>
     );
-  }
 }
 
 Smurf.defaultProps = {
