@@ -1,57 +1,61 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 
-class SmurfForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: '',
-      age: '',
-      height: ''
-    };
-  }
+const url = 'http://localhost:3333/smurfs';
 
-  addSmurf = event => {
+function SmurfForm() {
+  const [fields, setFields] = useState({
+    name: '',
+    age: '',
+    height: ''
+  });
+
+  const addSmurf = async event => {
     event.preventDefault();
     // add code to create the smurf using the api
-
-    this.setState({
-      name: '',
-      age: '',
-      height: ''
-    });
+    try {
+      const res = await axios.post(url, fields);
+      console.log(res)
+      setFields({
+        name: '',
+        age: '',
+        height: ''
+      });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
-  handleInputChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+  const handleInputChange = e => {
+    const { name, value } = e.target;
+    setFields(st => ({ ...st, [name]: value }));
   };
 
-  render() {
-    return (
-      <div className="SmurfForm">
-        <form onSubmit={this.addSmurf}>
+  return (
+    <div className="SmurfForm">
+      <form onSubmit={addSmurf}>
           <input
-            onChange={this.handleInputChange}
+            onChange={handleInputChange}
             placeholder="name"
-            value={this.state.name}
+            value={fields.name}
             name="name"
           />
           <input
-            onChange={this.handleInputChange}
+            onChange={handleInputChange}
             placeholder="age"
-            value={this.state.age}
+            value={fields.age}
             name="age"
           />
           <input
-            onChange={this.handleInputChange}
+            onChange={handleInputChange}
             placeholder="height"
-            value={this.state.height}
+            value={fields.height}
             name="height"
           />
           <button type="submit">Add to the village</button>
-        </form>
-      </div>
-    );
-  }
+      </form>
+    </div>
+  );
 }
 
 export default SmurfForm;
