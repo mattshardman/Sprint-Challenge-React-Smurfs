@@ -5,7 +5,7 @@ import Smurf from './Smurf';
 
 const SmurfsPage = styled.div`
   box-sizing: border-box;
-  padding: 80px 20% 0 20%;
+  padding: 80px 10% 0 10%;
   height: 100vh;
   width: 100%;
   display: flex;
@@ -40,13 +40,13 @@ const Btn = styled.button`
   outline: none;
 `;
 
-function Smurfs ({ smurfs, deleteMode, editMode, setEditMode, setDeleteMode, deleteSmurf }) {
+function Smurfs ({ smurfs, deleteMode, editMode, setEditMode, setDeleteMode, deleteSmurf, editSmurf }) {
     return (
       <SmurfsPage>
         <h2 style={{ color: "#484848" }}>Smurf in the village</h2>
         <BtnWrapper>
-          <Btn danger onClick={() => setDeleteMode(!deleteMode)}>Delete smurfs</Btn>
-          <Btn onClick={() => setEditMode(!editMode)}>Edit smurfs</Btn>
+          <Btn danger disable={editMode} onClick={() => setDeleteMode(!deleteMode)}>Delete smurfs</Btn>
+          <Btn disable={deleteMode} onClick={() => setEditMode(!editMode)}>Edit smurfs</Btn>
         </BtnWrapper>
         <SmurfWrapper>
           {smurfs.map(smurf => {
@@ -54,6 +54,8 @@ function Smurfs ({ smurfs, deleteMode, editMode, setEditMode, setDeleteMode, del
               <Smurf
                 key={smurf.id}
                 editMode={editMode}
+                editSmurf={editSmurf}
+                setEditMode={setEditMode}
                 deleteSmurf={deleteSmurf}
                 deleteMode={deleteMode}
                 {...smurf}

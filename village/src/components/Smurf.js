@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const Card = styled.div`
@@ -13,14 +13,14 @@ const Card = styled.div`
   transition: box-shadow 420ms, transform 420ms;
   margin: 10px;
   animation-name: ${({deleteMode}) => deleteMode ? 'wobble': 'none'};
-  animation-duration: 400ms;
+  animation-duration: 300ms;
   animation-iteration-count: infinite;
 
   @keyframes wobble {
     0% { transform: rotate(0)};
-    25% { transform: rotate(1deg)};
+    25% { transform: rotate(0.5deg)};
     50% { transform: rotate(0deg)};
-    75% { transform: rotate(-1deg)};
+    75% { transform: rotate(-0.5deg)};
     0% { transform: rotate(0)};
   }
 
@@ -63,12 +63,36 @@ const DeleteButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 `;
 
-const Smurf = ({id, name, height, age, deleteMode, deleteSmurf}) => {
+const Smurf = ({id, name, height, age, editMode, editSmurf, setEditMode, deleteMode, deleteSmurf}) => {
+  const [fields, setFields] = useState({
+    name: '',
+    height: '',
+    age: '',
+  });
+
   const deleteFunc = () => {
     deleteSmurf(id)
   } 
+
+  const submitForm = e => {
+    e.preventDefault();
+    editSmurf(id, fields);
+    setFields({
+      name: '',
+      age: '',
+      height: ''
+    });
+    setEditMode(false);
+  }
+
+  const handleInputChange = e => {
+    const { name, value } = e.target;
+    console.log(name, value)
+    setFields(st => ({ ...st, [name]: value }));
+  };
 
   return (
     <Card deleteMode={deleteMode} onClick={!!deleteMode && deleteFunc}> 
@@ -78,9 +102,22 @@ const Smurf = ({id, name, height, age, deleteMode, deleteSmurf}) => {
         </DeleteButton>}
       </Img>
       <Text>
-        <h3>{name}</h3>
-        <strong>{height} tall</strong>
-        <p>{age} smurf years old</p>
+        { !editMode ?
+          <React.Fragment>
+            <h3>{name}</h3>
+            <strong>{height} tall</strong>
+            <p>{age} smurf years old</p>
+          </React.Fragment>
+        :
+          <React.Fragment>
+            <form onSubmit={submitForm}>
+              <input type="text" value={fields.name} placeHolder={name} name="name" onChange={handleInputChange} />
+              <input type="text"  value={fields.height} placeHolder={height} name="height" onChange={handleInputChange} />
+              <input type="text"  value={fields.age} placeHolder={age} name="age" onChange={handleInputChange} />
+              <button type="submit">Change</button>
+            </form>
+          </React.Fragment>
+        }
       </Text>
     </Card>
   );

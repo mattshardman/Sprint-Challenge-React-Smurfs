@@ -34,6 +34,18 @@ function App () {
     }
   }
 
+  const editSmurf = async (id, fields) => {
+    const url = 'http://localhost:3333/smurfs';
+    console.log(id, fields)
+    try {
+      const res = await axios.put(`${url}/${id}`, fields);
+      console.log(res)
+      setSmurfs(res.data);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   const deleteSmurf = async id => {
     const url = 'http://localhost:3333/smurfs';
     try {
@@ -56,6 +68,7 @@ function App () {
           exact 
           path="/" 
           render={(props) => <Smurfs 
+            editSmurf={editSmurf}
             deleteSmurf={deleteSmurf} 
             editMode={editMode}
             setEditMode={setEditMode}
