@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 import SmurfForm from './components/SmurfForm';
 import Smurfs from './components/Smurfs';
+import Header from './components/Header';
 
 const url = 'http://localhost:3333/smurfs';
 
@@ -27,6 +28,7 @@ function App () {
   return (
     <Router>
       <div className="App">
+        <Header />
         <Route 
           exact 
           path="/" 
